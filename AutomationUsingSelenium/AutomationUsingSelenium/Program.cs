@@ -67,7 +67,7 @@ namespace AutomationUsingSelenium
             //Console.ReadKey();
 
             ba.SiteLogin(url2, usrName2, pasWord2);
-            Console.ReadKey();
+            //Console.ReadKey();
 
             ba.PerformSomeTasks();
             Console.ReadKey();

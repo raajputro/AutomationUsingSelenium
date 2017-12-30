@@ -19,14 +19,17 @@ namespace AutomationUsingSelenium
     {
         public IWebDriver browserDriver;
 
+        static string driverAddress = @"E:\My Projects\BrowserDriver";
+        static string alternativeDriverAddress = @"";
+
         public void StartBrowser(string browserType)
         {
             switch (browserType.ToUpper())
             {
-                case "CH": browserDriver = new ch.ChromeDriver(@"E:\My Projects\BrowserDriver"); break;
-                case "FF": browserDriver = new ff.FirefoxDriver(@"E:\My Projects\BrowserDriver"); break;
-                case "IE": browserDriver = new ie.InternetExplorerDriver(@"E:\My Projects\BrowserDriver"); break;
-                case "ED": browserDriver = new ed.EdgeDriver(@"E:\My Projects\BrowserDriver"); break;
+                case "CH": browserDriver = new ch.ChromeDriver(driverAddress); break;
+                case "FF": browserDriver = new ff.FirefoxDriver(driverAddress); break;
+                case "IE": browserDriver = new ie.InternetExplorerDriver(driverAddress); break;
+                case "ED": browserDriver = new ed.EdgeDriver(driverAddress); break;
             }
         }
 

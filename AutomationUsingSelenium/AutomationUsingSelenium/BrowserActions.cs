@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutomationUsingSelenium
@@ -111,6 +112,74 @@ namespace AutomationUsingSelenium
             var textBox = browserDriver.FindElement(By.Id(textBoxId));
             textBox.Clear();
             textBox.SendKeys(textBoxInput);
+            browserDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);              //this wait is necessary to find logout label by webdriver
+        }
+
+        public void AlternativeClickOnPartialLinkText(string partialLinkText, int counterLimit)
+        {
+            int counter = 0;
+
+            while (counter < counterLimit)
+            {
+                try
+                {
+                    var clickLink = browserDriver.FindElement(By.PartialLinkText(partialLinkText));
+                    clickLink.Click();
+                    browserDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);              //this wait is necessary to find logout label by webdriver                    
+                    return;
+                }
+                catch (Exception c)
+                {
+                    counter++;
+                    Thread.Sleep(10000);
+                }
+            }
+            System.Windows.Forms.MessageBox.Show("Element wasn't found!");
+        }
+
+        public void AlternativeClickOnTextId(string textId, int counterLimit)
+        {
+            int counter = 0;
+
+            while (counter < counterLimit)
+            {
+                try
+                {
+                    var clickLink = browserDriver.FindElement(By.Id(textId));
+                    clickLink.Click();
+                    browserDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);              //this wait is necessary to find logout label by webdriver                    
+                    return;
+                }
+                catch (Exception c)
+                {
+                    counter++;
+                    Thread.Sleep(10000);
+                }
+            }
+            System.Windows.Forms.MessageBox.Show("Element wasn't found!");
+        }
+
+        public void AlternativeInputOnTextBox(string textBoxId, string textBoxInput, int counterLimit)
+        {
+            int counter = 0;
+
+            while (counter < counterLimit)
+            {
+                try
+                {
+                    var textBox = browserDriver.FindElement(By.Id(textBoxId));
+                    textBox.Clear();
+                    textBox.SendKeys(textBoxInput);
+                    browserDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);              //this wait is necessary to find logout label by webdriver
+                    return;
+                }
+                catch (Exception e)
+                {
+                    counter++;
+                    Thread.Sleep(10000);
+                }
+            }
+            System.Windows.Forms.MessageBox.Show("Element wasn't found!");
         }
 
 
@@ -119,16 +188,29 @@ namespace AutomationUsingSelenium
             var searchText = "NPA Market Dynamics";
             var textBoxId = @"searchProductsText";
 
-            InputOnTextBox(textBoxId, searchText);
+            //InputOnTextBox(textBoxId, searchText);
+            AlternativeInputOnTextBox(textBoxId, searchText, 10);
+            //System.Threading.Thread.Sleep(30000);
 
             searchText = "NPA Market Dynamics";
-            ClickOnPartialLinkText(searchText);
+            //ClickOnPartialLinkText(searchText);
+            AlternativeClickOnPartialLinkText(searchText,10);
+            //System.Threading.Thread.Sleep(30000);
 
-            searchText = @"Source of Business";
-            ClickOnPartialLinkText(searchText);
+            //searchText = @"Source of Business";
+            //AlternativeClickOnPartialLinkText(searchText, 10);
+            ////ClickOnPartialLinkText(searchText);
+            //var sob = browserDriver.FindElement(By.Id("SOB"));
+            //sob.Click();
+            //System.Threading.Thread.Sleep(30000);
+
+            searchText = "SOB";
+            AlternativeClickOnTextId(searchText, 10);
 
             searchText = @"Performance Data";
-            ClickOnPartialLinkText(searchText);
+            AlternativeClickOnPartialLinkText(searchText, 10);
+            //ClickOnPartialLinkText(searchText);
+            //System.Threading.Thread.Sleep(30000);
         }
     }
 }
